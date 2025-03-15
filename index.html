@@ -10,12 +10,14 @@
             display: flex;
             justify-content: center;
         }
-        .gallery {
+        .container {
             width: 500px;
+            padding: 10px;
+        }
+        .gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 5px;
-            padding: 10px;
         }
         .gallery img {
             width: 100%;
@@ -23,10 +25,21 @@
             object-fit: cover;
             border-radius: 5px;
         }
+        .article {
+            color: white;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
-    <div class="gallery" id="gallery"></div>
+    <div class="container">
+        <div class="gallery" id="gallery"></div>
+        <div class="article" id="article" style="display: none;">
+            <h2>Artikel Galeri</h2>
+            <p>Selamat datang di galeri kami! Di sini Anda dapat menemukan berbagai gambar menarik yang dikurasi khusus untuk Anda.</p>
+        </div>
+    </div>
     
     <script>
         async function loadImages() {
@@ -36,7 +49,9 @@
                 const links = text.split('\n').map(link => link.trim()).filter(link => link);
                 
                 const gallery = document.getElementById('gallery');
+                const article = document.getElementById('article');
                 let index = 0;
+                let imageCount = 0;
                 
                 function addImage() {
                     if (index >= links.length) return;
@@ -48,6 +63,12 @@
                     };
                     gallery.appendChild(img);
                     index++;
+                    imageCount++;
+                    
+                    if (imageCount === 2) {
+                        gallery.appendChild(article);
+                        article.style.display = 'block';
+                    }
                 }
                 
                 while (index < links.length) {

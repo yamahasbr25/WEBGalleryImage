@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Gambar</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+        }
+        .gallery {
+            width: 500px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            padding: 10px;
+        }
+        .gallery img {
+            width: 100%;
+            aspect-ratio: 2 / 3;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery" id="gallery"></div>
+    
+    <script>
+        async function loadImages() {
+            try {
+                const response = await fetch('link.txt');
+                const text = await response.text();
+                const links = text.split('\n').map(link => link.trim()).filter(link => link);
+                
+                const gallery = document.getElementById('gallery');
+                let index = 0;
+                
+                function addImage() {
+                    if (index >= links.length) return;
+                    const img = document.createElement('img');
+                    img.src = links[index];
+                    img.onerror = () => {
+                        index++;
+                        addImage();
+                    };
+                    gallery.appendChild(img);
+                    index++;
+                }
+                
+                while (index < links.length) {
+                    addImage();
+                }
+            } catch (error) {
+                console.error('Gagal memuat gambar:', error);
+            }
+        }
+        
+        loadImages();
+    </script>
+</body>
+</html>

@@ -33,6 +33,14 @@
             object-fit: cover;
             border-radius: 5px;
         }
+        .ad {
+            width: 100%;
+            text-align: center;
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
@@ -53,6 +61,13 @@
                 
                 const gallery = document.getElementById('gallery');
                 let index = 0;
+                let adIndex = 0;
+                const ads = [
+                    '<div class="ad">Script Ad 1</div>',
+                    '<div class="ad">Script Ad 2</div>',
+                    '<div class="ad">Script Ad 3</div>',
+                    '<div class="ad">Script Ad 4</div>'
+                ];
                 
                 function addImage() {
                     if (index >= links.length) return;
@@ -64,6 +79,13 @@
                     };
                     gallery.appendChild(img);
                     index++;
+                    
+                    if (index % 4 === 0) {
+                        const ad = document.createElement('div');
+                        ad.innerHTML = ads[adIndex];
+                        gallery.appendChild(ad);
+                        adIndex = (adIndex + 1) % ads.length;
+                    }
                 }
                 
                 while (index < links.length) {

@@ -8,17 +8,7 @@
         body {
             background-color: black;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .article {
-            width: 500px;
-            background-color: black;
-            color: white;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            text-align: justify;
+            justify-content: center;
         }
         .gallery {
             width: 500px;
@@ -33,23 +23,10 @@
             object-fit: cover;
             border-radius: 5px;
         }
-        .ad {
-            width: 100%;
-            text-align: center;
-            background-color: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 5px 0;
-        }
     </style>
 </head>
 <body>
     
-    <div class="article">
-        <h2>Inspirasi Gaya Rambut Keriting</h2>
-        <p>Rambut keriting bisa menjadi daya tarik yang luar biasa jika dirawat dan ditata dengan baik. Artikel ini akan memberikan beberapa inspirasi gaya rambut keriting yang dapat Anda coba untuk tampilan yang lebih menarik.</p>
-    </div>
-
     <div class="gallery" id="gallery"></div>
    
     <script>
@@ -61,22 +38,6 @@
                 
                 const gallery = document.getElementById('gallery');
                 let index = 0;
-                let adIndex = 0;
-                const ads = [
-                    '<div class="ad"><center><script type="text/javascript"> 
-                    atOptions = {
-                        'key' : '32417884c3de3b64cea14b0307a6b0c1',
-                        'format' : 'iframe',
-                        'height' : 250,
-                        'width' : 300,
-                        'params' : {}
-                    };
-                </script>
-                <script type="text/javascript" src="//roastwearwritten.com/32417884c3de3b64cea14b0307a6b0c1/invoke.js"></script></center></div>',
-                    '<div class="ad">Script Ad 2</div>',
-                    '<div class="ad">Script Ad 3</div>',
-                    '<div class="ad">Script Ad 4</div>'
-                ];
                 
                 function addImage() {
                     if (index >= links.length) return;
@@ -88,13 +49,6 @@
                     };
                     gallery.appendChild(img);
                     index++;
-                    
-                    if (index % 4 === 0) {
-                        const ad = document.createElement('div');
-                        ad.innerHTML = ads[adIndex];
-                        gallery.appendChild(ad);
-                        adIndex = (adIndex + 1) % ads.length;
-                    }
                 }
                 
                 while (index < links.length) {

@@ -3,63 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curly Hairstyle Inspo Ideas</title>
+    <title>Galeri Gambar</title>
     <style>
         body {
             background-color: black;
-            display: flex;
-            justify-content: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
         }
-        .gallery {
+        .container {
             width: 500px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
-            padding: 10px;
+            margin: auto;
         }
         .gallery img {
             width: 100%;
-            aspect-ratio: 2 / 3;
+            height: auto;
+            display: block;
             object-fit: cover;
-            border-radius: 5px;
+            aspect-ratio: 16 / 9;
         }
     </style>
 </head>
 <body>
-    
-    <div class="gallery" id="gallery"></div>
-   
+    <div class="container">
+        <h1>Galeri Gambar</h1>
+        <div id="gallery" class="gallery"></div>
+    </div>
+
     <script>
-        async function loadImages() {
-            try {
-                const response = await fetch('link.txt');
-                const text = await response.text();
-                const links = text.split('\n').map(link => link.trim()).filter(link => link);
+        fetch('link.txt')
+            .then(response => response.text())
+            .then(text => {
+                const lines = text.split('\n').filter(line => line.trim() !== "");
+                let galleryDiv = document.getElementById('gallery');
+                let currentContainer = galleryDiv;
                 
-                const gallery = document.getElementById('gallery');
-                let index = 0;
-                
-                function addImage() {
-                    if (index >= links.length) return;
-                    const img = document.createElement('img');
-                    img.src = links[index];
-                    img.onerror = () => {
-                        index++;
-                        addImage();
-                    };
-                    gallery.appendChild(img);
-                    index++;
-                }
-                
-                while (index < links.length) {
-                    addImage();
-                }
-            } catch (error) {
-                console.error('Gagal memuat gambar:', error);
-            }
-        }
-        
-        loadImages();
+                lines.forEach(line => {
+                    if (line.startsWith('# ')) {
+                        let title = document.createElement('h2');
+                        title.textContent = line.replace('# ', '');
+                        galleryDiv.appendChild(title);
+                        currentContainer = document.createElement('div');
+                        galleryDiv.appendChild(currentContainer);
+                    } else if (line.startsWith('## ')) {
+                        let subTitle = document.createElement('h3');
+                        subTitle.textContent = line.replace('## ', '');
+                        galleryDiv.appendChild(subTitle);
+                        currentContainer = document.createElement('div');
+                        galleryDiv.appendChild(currentContainer);
+                    } else {
+                        let img = document.createElement('img');
+                        img.src = line.trim();
+                        img.loading = "lazy";
+                        currentContainer.appendChild(img);
+                    }
+                });
+            })
+            .catch(error => console.error('Gagal memuat link.txt:', error));
     </script>
 </body>
 </html>
